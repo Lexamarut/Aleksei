@@ -1,0 +1,76 @@
+{
+  "entities": {
+    "Manager": {
+      "title": "Manager",
+      "description": "A staff manager with their preferences and leave periods.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "isSpecial": { "type": "boolean" },
+        "allowSingleDaysOff": { "type": "boolean" },
+        "priorityLoading": { "type": "boolean" },
+        "vacations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "start": { "type": "string", "format": "date" },
+              "end": { "type": "string", "format": "date" }
+            }
+          }
+        },
+        "sickLeaves": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "start": { "type": "string", "format": "date" },
+              "end": { "type": "string", "format": "date" }
+            }
+          }
+        },
+        "preferredDaysOff": {
+          "type": "array",
+          "items": { "type": "string", "format": "date" }
+        }
+      },
+      "required": ["id", "name", "isSpecial", "vacations", "sickLeaves", "preferredDaysOff"]
+    },
+    "Requirement": {
+      "title": "Requirement",
+      "description": "Staffing requirements for a specific day of the week.",
+      "type": "object",
+      "properties": {
+        "dayOfWeek": { "type": "integer" },
+        "minMorning": { "type": "integer" },
+        "minEvening": { "type": "integer" }
+      },
+      "required": ["dayOfWeek", "minMorning", "minEvening"]
+    },
+    "Settings": {
+      "title": "Settings",
+      "description": "Global application settings including managers and requirements.",
+      "type": "object",
+      "properties": {
+        "managers": {
+          "type": "array",
+          "items": { "$ref": "Manager" }
+        },
+        "monthRequirements": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": { "$ref": "Requirement" }
+          }
+        }
+      }
+    }
+  },
+  "firestore": {
+    "/settings/global": {
+      "schema": "Settings",
+      "description": "Global settings for the application."
+    }
+  }
+}

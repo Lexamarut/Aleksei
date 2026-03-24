@@ -1,1 +1,37 @@
 @import "tailwindcss";
+
+@media print {
+  header, 
+  nav, 
+  .no-print,
+  button:not(.print-only) {
+    display: none !important;
+  }
+
+  body {
+    background-color: white !important;
+  }
+
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+  }
+
+  .max-w-7xl {
+    max-width: none !important;
+  }
+
+  /* Ensure the calendar/table takes full width on print */
+  .grid {
+    gap: 10px !important;
+  }
+
+  .rounded-2xl, .rounded-3xl {
+    border-radius: 0 !important;
+  }
+
+  .shadow-sm {
+    box-shadow: none !important;
+  }
+}

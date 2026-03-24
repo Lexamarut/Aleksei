@@ -1,0 +1,25 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        (request.auth.token.email == "alekseyapeki@gmail.com" && request.auth.token.email_verified == true);
+    }
+
+    // ===============================================================
+    // Global Settings
+    // ===============================================================
+    match /settings/global {
+      // Allow any authenticated user to read and write settings for now
+      // This ensures real-time sync between all users
+      allow read, write: if isAuthenticated();
+    }
+  }
+}

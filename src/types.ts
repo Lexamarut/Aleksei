@@ -1,10 +1,13 @@
-export type ShiftType = 'morning' | 'evening' | 'special' | 'off' | 'vacation';
+export type ShiftType = 'morning' | 'evening' | 'special' | 'off' | 'vacation' | 'sick';
 
 export interface Manager {
   id: string;
   name: string;
   isSpecial: boolean;
+  allowSingleDaysOff: boolean;
+  priorityLoading: boolean;
   vacations: { start: string; end: string }[];
+  sickLeaves: { start: string; end: string }[];
   preferredDaysOff: string[]; // ISO date strings
 }
 
